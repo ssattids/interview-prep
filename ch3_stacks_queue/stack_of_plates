@@ -1,0 +1,66 @@
+# stack = []
+# push = stack.append(x)
+# pop = stack.pop()
+# peek = 
+# def peek(stack):
+#     if stack:
+#         return stack[-1]    # this will get the last element of stack
+#     else:
+#         return None
+
+class DinnerPlates:
+
+    def __init__(self, capacity: int):
+        self.stack_of_stacks = []
+        self.capacity
+        self.current_stack_ind = -1
+        self.current_stack_capacity
+        
+    def push(self, val: int) -> None:
+        if self.current_stack_ind == -1:
+            #append a stack to the array
+            self.current_stack_ind = 0
+            self.stack_of_stacks.append([])
+            current_stack = self.stack_of_stacks[self.current_stack_ind]
+            current_stack.append(val)
+        elif (len(self.stack_of_stacks[self.current_stack_ind]) == self.capacity):
+            #create a new stack and push to that
+            self.stack_of_stacks.append([])
+            self.current_stack_ind += 1
+            current_stack = self.stack_of_stacks[self.current_stack_ind]
+            current_stack.append(val)
+        else:
+            #push to current stack
+            current_stack = self.stack_of_stacks[self.current_stack_ind]
+            current_stack.append(val)
+
+    def pop(self) -> int:
+        if self.current_stack_ind == -1:
+            return None
+        else:
+            #pop the value at current stack
+            self.stack_of_stacks[self.current_stack_ind].pop()
+            #if it is the last value in the stack, we must move to the previous stack
+            if self.stack_of_stacks[self.current_stack_ind] == []:
+                self.current_stack_ind -= 1
+                current_stack = self.stack_of_stacks[self.current_stack_ind]
+                current_stack.pop(val)
+                
+
+    def popAtStack(self, index: int) -> int:
+        stack_of_stacks_index = index // self.capacity
+        stack_index = index % self.capacity
+        
+        value = self.stack_of_stacks[stack_of_stacks_index][stack_index]
+        
+        #remove that value and adjust everything along the stack
+        
+        #for current stack and after, remove the first value in the next stack and place in the last value of the current stack
+        
+        return value
+
+# Your DinnerPlates object will be instantiated and called as such:
+# obj = DinnerPlates(capacity)
+# obj.push(val)
+# param_2 = obj.pop()
+# param_3 = obj.popAtStack(index)
