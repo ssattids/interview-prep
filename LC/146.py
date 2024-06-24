@@ -5,7 +5,76 @@ class Node:
         self.next = None
         self.prev = None
 
-class LRUCache:
+from collections import OrderedDict
+
+# important ordered dict methods
+# Creating an empty OrderedDict
+#od = OrderedDict()
+
+# Creating an OrderedDict with initial elements
+# od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+
+# Remove a specific item
+# od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+# od.pop('a')
+# od
+# >> OrderedDict([('b', 2), ('c', 3)])
+
+# Remove the last item
+# od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+# od.popitem()  # By default, it removes the last item
+# od
+# >> OrderedDict([('a', 1), ('b', 2)])
+
+# Remove the first item
+# od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+# od.popitem(last=False)
+# od
+# >> OrderedDict([('b', 2), ('c', 3)])
+
+# Move an existing key to the end
+# od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+# od.move_to_end('b')
+# od
+# >> OrderedDict([('a', 1), ('c', 3), ('b', 2)])
+
+# Move an existing key to the start
+# od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+# od.move_to_end('b', last=False)
+# od
+# >> OrderedDict([('b', 2), ('a', 1), ('c', 3)])
+
+class LRUCacheOrderedDict:
+
+    def __init__(self, capacity: int):
+        self.store = OrderedDict()
+        self.capacity = capacity
+        
+    def get(self, key: int) -> int:
+        if key not in self.store:
+            return -1
+        self.store.move_to_end(key)
+        return self.store[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.store:
+            self.store.move_to_end(key)
+            self.store[key] = value
+        else:
+            if len(self.store) == self.capacity:
+                # remove the first item that was added
+                self.store.popitem(last=False)
+            # add the newest item at the end
+            self.store[key] = value
+
+            
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+class LRUCacheOld:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
