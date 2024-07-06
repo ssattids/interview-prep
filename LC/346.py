@@ -8,7 +8,6 @@ class MovingAverage:
         return sum(self.values)/len(self.values)
 
     def next(self, val: int) -> float:
-        
         if len(self.values) < self.size:
             self.values.append(val)
             return self.average()
@@ -16,9 +15,3 @@ class MovingAverage:
             self.values.pop(0)
             self.values.append(val)
             return self.average()
-
-
-
-# Your MovingAverage object will be instantiated and called as such:
-# obj = MovingAverage(size)
-# param_1 = obj.next(val)
