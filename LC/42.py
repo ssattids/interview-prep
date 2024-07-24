@@ -1,6 +1,33 @@
 class Solution:
 
     def trap(self, height: List[int]) -> int:
+        """based on a solution from neetcode - key is to come up with an equation per item"""
+        
+        max_left_arr = []
+        max_left_current = 0
+        for h in height:
+            max_left_arr.append(max_left_current)
+            if h > max_left_current:
+                max_left_current = h
+
+        max_right_arr = []
+        max_right_current = 0
+        for h in height[::-1]:
+            max_right_arr.append(max_right_current)
+            if h > max_right_current:
+                max_right_current = h
+
+        max_right_arr = max_right_arr[::-1]
+
+        water_trapped = 0
+        for max_left, max_right, h in zip(max_left_arr, max_right_arr, height):
+            water_trapped += max(0, min(max_left, max_right)-h)
+
+        return water_trapped
+
+
+
+    def trap_original(self, height: List[int]) -> int:
         
         max_index = height.index(max(height))
         sub_area_water_part1 = self.water_till_max(height, max_index)
