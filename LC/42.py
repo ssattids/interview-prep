@@ -1,8 +1,38 @@
 class Solution:
 
     def trap(self, height: List[int]) -> int:
-        """based on a solution from neetcode - key is to come up with an equation per item"""
-        
+        """
+        2 pointer solution
+        time: O(n)
+        space: O(1)
+        """
+        l_p = 0
+        r_p = len(height)-1
+        max_l = height[l_p]
+        max_r = height[r_p]
+        water_trapped = 0
+        while l_p < r_p:
+            # if max_left value from the left is smaller than right we know that 
+            # no matter what value in the right, the left value is the bottleneck
+            # no matter the right value
+            # (remember the water height is dependent on the value in the left and right)
+            if max_l <= max_r:             
+                l_p += 1
+                max_l = max(max_l, height[l_p])
+                water_trapped += max(0, max_l-height[l_p])
+            else:
+                r_p -= 1
+                max_r = max(max_r, height[r_p])
+                water_trapped += max(0, max_r-height[r_p])
+
+        return water_trapped
+
+    def trap_before(self, height: List[int]) -> int:
+        """
+        key is to come up with an equation per item 
+        time: O(n)
+        space: O(n)
+        """
         max_left_arr = []
         max_left_current = 0
         for h in height:
@@ -28,6 +58,11 @@ class Solution:
 
 
     def trap_original(self, height: List[int]) -> int:
+        """
+        First attempt
+        time: O(n)
+        space: O(1)
+        """
         
         max_index = height.index(max(height))
         sub_area_water_part1 = self.water_till_max(height, max_index)
