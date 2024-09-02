@@ -1,11 +1,37 @@
 class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+            Do not return anything, modify nums1 in-place instead.
+            
+            Solution: merge with 3 pointers - the key is to build the solution from the end
+            
+            Time complexity: O(n)
+            Space complexity: O(n)
+        """
+
+        p1=m-1 # this is the end of the valid numbers in nums1
+        p2=n-1 # this is the end of nums2
+        pe = m+n-1 # this is the end of nums1
+        
+        for i in range(len(m+n-1), 0, -1):
+            # access the valid numbers from the first set and the second set
+            p1_num = nums1[p1]
+            p2_num = nums1[p2]
+            # compare the numbers to get the larger numbers, and start filling out nums 1 from the end
+            if p1_num >= p2_num:
+                nums1[pe] = p1_num
+                p1-=1
+                pe-=1
+            else:
+                nums1[pe] = p2_num
+                p2-=1
+                pe-=1
+    
     def merge_sol1(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         """
         Do not return anything, modify nums1 in-place instead.
 
         merge with copy
-        
-        
         """
         #make a copy of the first m elements of nums1
         nums1_copy = nums1[:m]
