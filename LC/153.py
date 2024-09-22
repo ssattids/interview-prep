@@ -2,7 +2,39 @@ class Solution:
 
     def findMin(self, nums: List[int]) -> int:
         """
-        solution
+        official solution
+        time complexity: O(log(n))
+        space complexity: O(log(n))
+        """
+        res = nums[0]
+        start = 0
+        end = len(nums) - 1
+
+        while(start <= end):
+
+            if nums[start] < nums[end]:
+                res = min(res, nums[start])
+
+            mid = start + ((end-start) //2)
+            # in this case, we know that the mid value is the
+            # end of the original array, so we need to go left
+            # [1,2,3,4,5] => nums[mid]>=nums[start] == 3>=1, False, go left
+            # [5,1,2,3,4] => nums[mid]>=nums[start] == 2>=5, False, go left
+            # [4,5,1,2,3] => nums[mid]>=nums[start] == 1>=4, False, go left, registers the global the min
+            # [3,4,5,1,2] => nums[mid]>=nums[start] == 5>=3, True, go right
+            # [2,3,4,5,1] => nums[mid]>=nums[start] == 4>=2, false, go right
+            
+            res = min(res, nums[mid])
+            if nums[mid] >= nums[start]:
+                start = mid + 1
+            else:
+                end = mid - 1
+
+        return res
+
+    def findMinBinarySearch(self, nums: List[int]) -> int:
+        """
+        my solution
         time complexity: O(log(n))
         space complexity: O(1)
         """
@@ -41,7 +73,9 @@ class Solution:
         return None
 
     def findMin_old(self, nums: List[int]) -> int:
-        
+        """
+        doesn't pass all tests
+        """
         start = 0
         end = len(nums) - 1
         i = 0
