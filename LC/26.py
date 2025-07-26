@@ -1,6 +1,10 @@
 class Solution:
     
     def removeDuplicates(self, nums: List[int]) -> int:
+        """
+        time complexity: O(n)
+        space complexity: O(1)
+        """
 
         j = 0
         current_number_p1 = nums[j]
