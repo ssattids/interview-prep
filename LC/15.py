@@ -56,8 +56,8 @@ class Solution:
         for i, num in enumerate(nums):
             if i == len(nums)-1:
                 break
-            # the second part of this 
-            if i == 0 or nums[i - 1] != nums[i]:
+            # if the current number equals the previous number - we have duplicate numbers, and we have already taken into account solutions from duplicate numbers!
+            if i == 0 or nums[i] != nums[i - 1]:
                 # take the array infront of the ith pointer - and calculate 2 sum on it - to get zero, you need to calculate the negative of num (num = the number at the ith pointer)
                 two_sum_solutions = twoSum(nums, i+1, -1*num, num)
             
